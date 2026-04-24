@@ -1,42 +1,3 @@
-# Resource Management Library
-
-A lightweight, non-preemptive task scheduler designed for AVR microcontrollers (like Arduino Uno/Nano).
-
-## Features
-- **100ms Resolution**: Timer-driven ticks (10Hz) for precise task execution.
-- **Priority Support**: Tasks are sorted and executed based on priority (lower value = higher priority).
-- **Power Efficiency**: Automatically enters **Sleep Mode (IDLE)** when no tasks are pending to save power.
-- **Robustness**: Handles multiple pending ticks if a task execution takes longer than the tick interval.
-
-## How to Use
-1. **Initialize**: Call `scheduler_init()` and `timer_init()` in your `setup()` function.
-2. **Define Tasks**: Create functions for the tasks you want to run.
-3. **Add Tasks**: Use `scheduler_add_task(function_ptr, period, priority)`.
-   - `period`: Time in 100ms units (e.g., `10` = 1 second, `20` = 2 seconds).
-   - `priority`: Lower number = higher priority (e.g., 1 is higher than 5).
-4. **Run**: Call `scheduler_run()` inside your `loop()`.
-
-### Example
-```cpp
-void myTask() {
-    Serial.println("Running every 1 second");
-}
-
-void setup() {
-    Serial.begin(115200);
-    scheduler_init();
-    timer_init();
-    // Add task: run myTask every 10 ticks (10 * 100ms = 1s) with priority 1
-    scheduler_add_task(myTask, 10, 1); 
-}
-
-void loop() {
-    scheduler_run();
-}
-```
-
----
-
 # Ռեսուրսների Կառավարման Գրադարան (Resource Management)
 
 Թեթև և արդյունավետ առաջադրանքների պլանավորող (scheduler) նախատեսված AVR միկրոկոնտրոլերների համար (օրինակ՝ Arduino Uno/Nano)։
@@ -66,6 +27,45 @@ void setup() {
     scheduler_init();
     timer_init();
     // Ավելացնել առաջադրանք: կատարել myTask-ը ամեն 10 թիքը մեկ (10 * 100մվ = 1վ) 1 առաջնահերթությամբ
+    scheduler_add_task(myTask, 10, 1); 
+}
+
+void loop() {
+    scheduler_run();
+}
+```
+
+---
+
+# Resource Management Library
+
+A lightweight, non-preemptive task scheduler designed for AVR microcontrollers (like Arduino Uno/Nano).
+
+## Features
+- **100ms Resolution**: Timer-driven ticks (10Hz) for precise task execution.
+- **Priority Support**: Tasks are sorted and executed based on priority (lower value = higher priority).
+- **Power Efficiency**: Automatically enters **Sleep Mode (IDLE)** when no tasks are pending to save power.
+- **Robustness**: Handles multiple pending ticks if a task execution takes longer than the tick interval.
+
+## How to Use
+1. **Initialize**: Call `scheduler_init()` and `timer_init()` in your `setup()` function.
+2. **Define Tasks**: Create functions for the tasks you want to run.
+3. **Add Tasks**: Use `scheduler_add_task(function_ptr, period, priority)`.
+   - `period`: Time in 100ms units (e.g., `10` = 1 second, `20` = 2 seconds).
+   - `priority`: Lower number = higher priority (e.g., 1 is higher than 5).
+4. **Run**: Call `scheduler_run()` inside your `loop()`.
+
+### Example
+```cpp
+void myTask() {
+    Serial.println("Running every 1 second");
+}
+
+void setup() {
+    Serial.begin(115200);
+    scheduler_init();
+    timer_init();
+    // Add task: run myTask every 10 ticks (10 * 100ms = 1s) with priority 1
     scheduler_add_task(myTask, 10, 1); 
 }
 
